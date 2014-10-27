@@ -4,7 +4,7 @@ import Model.CurrencySet;
 
 public class CurrencySetLoader {
 
-    private CurrencySet currencySet;
+    private final CurrencySet currencySet;
 
     public CurrencySetLoader(CurrencySet currencySet) {
         this.currencySet = currencySet;
