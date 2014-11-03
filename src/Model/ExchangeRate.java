@@ -1,25 +1,26 @@
 package Model;
 
-import Model.Currency;
+public final class ExchangeRate {
 
-public class ExchangeRate {
+    private final Currency currencyFrom;
+    private final Currency currencyTo;
 
-    private final Currency currency0;
-    private final Currency currency1;
-    private final float rate;
-
-    public ExchangeRate(Currency currency0, Currency currency1, float rate) {
-        this.currency0 = currency0;
-        this.currency1 = currency1;
-        this.rate = rate;
+    public ExchangeRate(Currency currencyFrom, Currency currencyTo) {
+        this.currencyFrom = currencyFrom;
+        this.currencyTo = currencyTo;
     }
 
-    public Currency getCurrency0() {
-        return currency0;
+    public Currency getCurrencyFrom() {
+        return currencyFrom;
     }
 
-    public Currency getCurrency1() {
-        return currency1;
+    public Currency getCurrencyTo() {
+        return currencyTo;
+    }
+
+    public float loadRate() {
+        //Usar campos currencyFrom y currencyTo
+        return 0;
     }
 
 }

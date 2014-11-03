@@ -6,8 +6,8 @@ public class CurrencySet {
 
     private LinkedList<Currency> currencySet;
 
-    public CurrencySet(LinkedList<Currency> currencySet) {
-        this.currencySet = currencySet;
+    public CurrencySet() {
+        this.currencySet = new LinkedList<>();
     }
 
     public LinkedList<Currency> getCurrencySet() {
@@ -18,6 +18,10 @@ public class CurrencySet {
     }
 
     public void remove() {
+    }
+    
+    public Currency search(){
+        return null;
     }
     
 }

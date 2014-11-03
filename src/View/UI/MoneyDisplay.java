@@ -1,14 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View.UI;
 
-/**
- *
- * @author usuario
- */
+import Model.Money;
+
 public class MoneyDisplay {
+    private final Money money;
+
+    public MoneyDisplay(Money money) {
+        this.money = money;
+    }
     
 }

@@ -2,12 +2,20 @@ package Model;
 
 public class Exchange {
 
-    private final float quantity;
-    private final Currency currency;
+    private final Money money;
+    private final Currency currencyTo;
 
-    public Exchange(float quantity, Currency currency) {
-        this.quantity = quantity;
-        this.currency = currency;
+    public Exchange(Money money, Currency currencyTo) {
+        this.money = money;
+        this.currencyTo = currencyTo;
+    }
+
+    public Money getMoney() {
+        return money;
+    }
+
+    public Currency getCurrencyTo() {
+        return currencyTo;
     }
 
 }
