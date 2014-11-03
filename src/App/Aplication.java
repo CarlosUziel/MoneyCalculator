@@ -6,7 +6,12 @@ import View.Persistence.CurrencySetLoader;
 
 public class Aplication {
 
-    CurrencySet currencySet = new CurrencySetLoader().load();
-    ExchangeCommand exchangeCommand = new ExchangeCommand(currencySet);
-    exchangeCommand.exec();
+    private static CurrencySet currencySet;
+    private static ExchangeCommand exchangeCommand;
+
+    public static void main(String[] args) {
+        currencySet = new CurrencySetLoader().load();
+        exchangeCommand = new ExchangeCommand(currencySet);
+        exchangeCommand.exec();
+    }
 }

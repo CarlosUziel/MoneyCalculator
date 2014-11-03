@@ -6,18 +6,17 @@ import Model.Exchange;
 public class ExchangeDialog {
 
     private final CurrencySet currencySet;
-    private final Exchange exchange;
+    private Exchange exchange;
 
     public ExchangeDialog(CurrencySet currencySet) {
         this.currencySet = currencySet;
-        this.exchange = loadExchange();
+    }
+    private Exchange loadExchange() {
+        return null;
     }
 
     public Exchange getExchange() {
         return exchange;
     }
 
-    private Exchange loadExchange() {
-        return null;
-    }
 }
