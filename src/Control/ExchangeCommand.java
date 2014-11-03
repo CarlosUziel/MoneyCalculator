@@ -18,15 +18,30 @@ public class ExchangeCommand {
     }
 
     public void exec() {
-        //LLamar a ExchangeDialog - Devuelve un exchange
-        ExchangeDialog exchangeDialog = new ExchangeDialog(currencySet);
-        Exchange exchange = exchangeDialog.returnExchange();
-        //Llama a ExchangeRateLoader y devuelve un ExchangeRate
-        ExchangeRate exchangeRate = new ExchangeRateLoader(exchange.getMoney().getCurrency(), exchange.getCurrencyTo()).load();
-        //LLama a Exchanger y se obtiene un money
-        Money money = new Exchanger(exchange.getMoney().getQuantity(), exchangeRate).getMoney();
-        //Llama a MoneyDispaly que muestra el dinero final
-        new MoneyDisplay(money);
+        ExchangeDialog exchangeDialog = readExchangeDialog(currencySet);
+        Exchange exchange = readExchange(exchangeDialog);
+        ExchangeRate exchangeRate = readExchangeRate(exchange);
+        Money money = readMoney(exchange, exchangeRate);
+        readMoneyDisplay(money);
+    }
+    
+    private ExchangeDialog readExchangeDialog(CurrencySet currencySet){
+        return new ExchangeDialog(currencySet);
+    }
+    
+    private Exchange readExchange(ExchangeDialog exchangeDialog){
+        return exchangeDialog.getExchange();
+    }
+    
+    private ExchangeRate readExchangeRate(Exchange exchange){
+        return new ExchangeRateLoader().load(exchange.getMoney().getCurrency(), exchange.getCurrencyTo());
+    }
+    
+    private Money readMoney(Exchange exchange, ExchangeRate exchangeRate){
+        return new Exchanger(exchange.getMoney().getQuantity(), exchangeRate).getMoney();
     }
 
+    private MoneyDisplay readMoneyDisplay(Money money){
+        return new MoneyDisplay(money);
+    }
 }

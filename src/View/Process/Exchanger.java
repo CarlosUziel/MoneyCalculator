@@ -18,6 +18,6 @@ public class Exchanger {
     }
 
     private float getExchange() {
-        return quantity * exchangeRate.loadRate();
+        return quantity * exchangeRate.getRate();
     }
 }
