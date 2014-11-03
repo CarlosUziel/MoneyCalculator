@@ -22,7 +22,7 @@ public class ExchangeCommand {
         ExchangeDialog exchangeDialog = new ExchangeDialog(currencySet);
         Exchange exchange = exchangeDialog.returnExchange();
         //Llama a ExchangeRateLoader y devuelve un ExchangeRate
-        ExchangeRate exchangeRate = new ExchangeRateLoader(exchange.getMoney().getCurrency(),exchange.getCurrencyTo()).load();
+        ExchangeRate exchangeRate = new ExchangeRateLoader(exchange.getMoney().getCurrency(), exchange.getCurrencyTo()).load();
         //LLama a Exchanger y se obtiene un money
         Money money = new Exchanger(exchange.getMoney().getQuantity(), exchangeRate).getMoney();
         //Llama a MoneyDispaly que muestra el dinero final

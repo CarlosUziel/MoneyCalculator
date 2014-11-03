@@ -12,12 +12,12 @@ public class Exchanger {
         this.quantity = quantity;
         this.exchangeRate = exchangeRate;
     }
-    
-    public Money getMoney(){
-        return new Money(getExchange(),exchangeRate.getCurrencyTo());
+
+    public Money getMoney() {
+        return new Money(getExchange(), exchangeRate.getCurrencyTo());
     }
 
     private float getExchange() {
-        return quantity*exchangeRate.loadRate();
+        return quantity * exchangeRate.loadRate();
     }
 }

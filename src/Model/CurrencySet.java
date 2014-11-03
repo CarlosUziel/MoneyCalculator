@@ -19,9 +19,9 @@ public class CurrencySet {
 
     public void remove() {
     }
-    
-    public Currency search(){
+
+    public Currency search() {
         return null;
     }
-    
+
 }
