@@ -1,16 +1,16 @@
 package Model;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class CurrencySet {
 
-    private LinkedList<Currency> currencySet;
+    private ArrayList<Currency> currencySet;
 
-    public CurrencySet() {
-        this.currencySet = new LinkedList<>();
+    public CurrencySet(ArrayList<Currency> currencySet) {
+        this.currencySet = currencySet;
     }
 
-    public LinkedList<Currency> getCurrencySet() {
+    public ArrayList<Currency> getCurrencySet() {
         return currencySet;
     }
 
