@@ -4,10 +4,13 @@ import Model.CurrencySet;
 import Model.Exchange;
 import Model.ExchangeRate;
 import Model.Money;
-import View.Persistence.ExchangeRateLoader;
+import View.Persistence.DatabaseExchangeRateLoader;
 import View.Process.Exchanger;
 import View.UI.ExchangeDialog;
 import View.UI.MoneyDisplay;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class ExchangeCommand {
 
@@ -17,7 +20,7 @@ public class ExchangeCommand {
         this.currencySet = currencySet;
     }
 
-    public void exec() {
+    public void exec() throws SQLException {
         ExchangeDialog exchangeDialog = readExchangeDialog(currencySet);
         Exchange exchange = readExchange(exchangeDialog);
         ExchangeRate exchangeRate = readExchangeRate(exchange);
@@ -33,8 +36,8 @@ public class ExchangeCommand {
         return exchangeDialog.getExchange();
     }
     
-    private ExchangeRate readExchangeRate(Exchange exchange){
-        return new ExchangeRateLoader().load(exchange.getMoney().getCurrency(), exchange.getCurrencyTo());
+    private ExchangeRate readExchangeRate(Exchange exchange) throws SQLException{
+        return new DatabaseExchangeRateLoader(createConnection("orcl.db")).load(exchange.getMoney().getCurrency(), exchange.getCurrencyTo());
     }
     
     private Money readMoney(Exchange exchange, ExchangeRate exchangeRate){
@@ -43,5 +46,10 @@ public class ExchangeCommand {
 
     private MoneyDisplay readMoneyDisplay(Money money){
         return new MoneyDisplay(money);
+    }
+
+    private Connection createConnection(String dbPath) throws SQLException {
+        DriverManager.registerDriver(new org.sqlite.JDBC());
+        return DriverManager.getConnection("jdbc:sqlite:" + dbPath);
     }
 }

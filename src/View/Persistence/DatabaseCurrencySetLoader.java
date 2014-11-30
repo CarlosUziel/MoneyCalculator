@@ -18,7 +18,8 @@ public class DatabaseCurrencySetLoader implements CurrencySetLoader {
     @Override
     public CurrencySet load() {
         try {
-            return processQuery(connection.createStatement().executeQuery("select * FROM CURRENCY"));
+            return processQuery(connection.createStatement().executeQuery(
+                    "select * FROM CURRENCY"));
         } catch (SQLException ex) {
             return null;
         }
@@ -34,7 +35,7 @@ public class DatabaseCurrencySetLoader implements CurrencySetLoader {
 
     private Currency processCurrency(ResultSet resultSet) throws SQLException {
         return new Currency(
-                resultSet.getInt("code"),
+                resultSet.getString("code"),
                 resultSet.getString("name"),
                 resultSet.getString("symbol"));
     }

@@ -5,7 +5,6 @@ import Model.ExchangeRate;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class DatabaseExchangeRateLoader implements ExchangeRateLoader {
 
@@ -13,35 +12,28 @@ public class DatabaseExchangeRateLoader implements ExchangeRateLoader {
 
     public DatabaseExchangeRateLoader(Connection connection) {
         this.connection = connection;
-        
+
     }
 
     @Override
-    public ExchangeRate load(Currency currencyFrom, Currency  currencyTo) {
+    public ExchangeRate load(Currency currencyFrom, Currency currencyTo) {
         try {
             return processQuery(connection.createStatement().executeQuery(
-                    "Select rate "
-                            + "FROM CURRENCY "
-                            + "WHERE currencyFrom = " + currencyFrom
-                            + " AND currencyTo = " + currencyTo));
+                    "Select * "
+                    + "FROM EXCHANGE_RATE "
+                    + "WHERE CURRENCYFROM = " + currencyFrom.getCode()
+                    + " AND CURRENCYTO = " + currencyTo.getCode()),
+                    currencyFrom, currencyTo);
         } catch (SQLException ex) {
             return null;
         }
     }
 
-    private ExchangeRate processQuery(ResultSet resultSet) throws SQLException {
-        ArrayList<Currency> currencySet = new ArrayList<>();
-        while (resultSet.next()) {
-            currencySet.add(processCurrency(resultSet));
-        }
-        return new ExchangeRate(currencySet);
-    }
-
-    private Currency processCurrency(ResultSet resultSet) throws SQLException {
-        return new Currency(
-                resultSet.getInt("code"),
-                resultSet.getString("name"),
-                resultSet.getString("symbol"));
+    private ExchangeRate processQuery(ResultSet resultSet, Currency currencyFrom, Currency currencyTo) throws SQLException {
+        return new ExchangeRate(
+                currencyFrom,
+                currencyTo,
+                resultSet.getFloat("rate"));
     }
 
 }
