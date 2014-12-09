@@ -2,6 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
+
 public class CurrencySet {
 
     private ArrayList<Currency> currencySet;
@@ -24,4 +25,13 @@ public class CurrencySet {
         return null;
     }
 
+    public Currency[] toArray(){
+        Currency[] currencyArray = new Currency[currencySet.size()];
+        int i = 0;
+        for (Currency currency : currencySet) {
+            currencyArray[i++] = currency;
+        }
+        return currencyArray;
+    }
+    
 }
