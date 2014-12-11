@@ -20,16 +20,11 @@ public class ExchangeCommand {
         this.currencySet = currencySet;
     }
 
-    public void exec() throws SQLException {
-        ExchangeDialog exchangeDialog = readExchangeDialog(currencySet);
+    public void exec() throws SQLException {        
         Exchange exchange = readExchange(exchangeDialog);
         ExchangeRate exchangeRate = readExchangeRate(exchange);
         Money money = readMoney(exchange, exchangeRate);
         readMoneyDisplay(money);
-    }
-    
-    private ExchangeDialog readExchangeDialog(CurrencySet currencySet){
-        return new ExchangeDialog(currencySet);
     }
     
     private Exchange readExchange(ExchangeDialog exchangeDialog){
