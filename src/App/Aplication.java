@@ -29,7 +29,7 @@ public class Aplication {
     }
 
     private static Connection createConnection(String dbPath) throws SQLException {
-        DriverManager.registerDriver(new OracleDriver());
+        DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
         return DriverManager.getConnection(dbPath, "system", "orcl");
     }
 }
