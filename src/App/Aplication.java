@@ -16,7 +16,7 @@ public class Aplication {
     private static ExchangeCommand exchangeCommand;
 
     public static void main(String[] args) throws SQLException {
-        Connection connection = createConnection("jdbc:oracle:thin:192.168.56.101:5560:orcl");
+        Connection connection = createConnection("jdbc:oracle:thin:@localhost:1521:orcl");
 
 //        currencySet = new DatabaseCurrencySetLoader(connection).load();
 //        ArrayList<Currency> currencies = currencySet.getCurrencySet();
