@@ -4,8 +4,6 @@ import Model.CurrencySet;
 import View.UI.ExchangeDialog;
 import java.awt.BorderLayout;
 import static java.awt.BorderLayout.SOUTH;
-import java.awt.Component;
-import java.awt.PopupMenu;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -13,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class ApplicationFrame extends JFrame {
-    
+
     private final CurrencySet currencySet;
     private ExchangeDialog exchangeDialog;
     private ActionListener actionListener;
@@ -28,7 +26,7 @@ public class ApplicationFrame extends JFrame {
         this.getContentPane().add(createExchangeDialogPanel(currencySet));
         this.getContentPane().add(createMoneyPanel(), SOUTH);
         this.getContentPane().add(createCalculateButton(), SOUTH);
-        
+
     }
 
     private JButton createCalculateButton() {
@@ -52,6 +50,9 @@ public class ApplicationFrame extends JFrame {
         exchangeDialog = exchangeDialogPanel;
         return exchangeDialogPanel;
     }
-    
-    
+
+    public ExchangeDialog getExchangeDialog() {
+        return exchangeDialog;
+    }
+
 }
