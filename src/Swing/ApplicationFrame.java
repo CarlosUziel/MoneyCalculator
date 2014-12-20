@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 public class ApplicationFrame extends JFrame {
 
@@ -46,7 +48,7 @@ public class ApplicationFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    exchangeCommand.exec(exchangeDialog,moneyPanel);
+                    exchangeCommand.exec(exchangeDialog, moneyPanel);
                 } catch (SQLException ex) {
                     Logger.getLogger(ApplicationFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -57,7 +59,7 @@ public class ApplicationFrame extends JFrame {
 
     private JPanel createMoneyPanel() {
         MoneyPanel moneyPanel = new MoneyPanel();
-        this.moneyPanel = moneyPanel; 
+        this.moneyPanel = moneyPanel;
         return moneyPanel;
     }
 

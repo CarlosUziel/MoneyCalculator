@@ -19,6 +19,7 @@ class MoneyPanel extends JPanel implements MoneyDisplay{
 
     private JTextField createResultField(int width) {
         this.resultField = new JTextField(width);
+        this.resultField.setEditable(false);
         return resultField;
     }
 
