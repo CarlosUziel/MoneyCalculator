@@ -9,24 +9,24 @@ import View.Process.Exchanger;
 import View.UI.ExchangeDialog;
 import View.UI.MoneyDisplay;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import oracle.jdbc.driver.OracleDriver;
 
 public class ExchangeCommand {
 
     private final CurrencySet currencySet;
     private ExchangeDialog exchangeDialog;
+    private final Connection connection;
 
-    public ExchangeCommand(CurrencySet currencySet) {
+    public ExchangeCommand(CurrencySet currencySet, Connection connection) {
         this.currencySet = currencySet;
+        this.connection = connection;
     }
 
-    public void exec() throws SQLException {
+    public void exec(ExchangeDialog exchangeDialog, MoneyDisplay moneyPanel) throws SQLException {
         Exchange exchange = readExchange(exchangeDialog);
         ExchangeRate exchangeRate = readExchangeRate(exchange);
         Money money = readMoney(exchange, exchangeRate);
-        readMoneyDisplay(money);
+        displayMoney(moneyPanel, money);
     }
 
     private Exchange readExchange(ExchangeDialog exchangeDialog) {
@@ -34,19 +34,14 @@ public class ExchangeCommand {
     }
 
     private ExchangeRate readExchangeRate(Exchange exchange) throws SQLException {
-        return new DatabaseExchangeRateLoader(createConnection("orcl.db")).load(exchange.getMoney().getCurrency(), exchange.getCurrencyTo());
+        return new DatabaseExchangeRateLoader(connection).load(exchange.getMoney().getCurrency(), exchange.getCurrencyTo());
     }
 
     private Money readMoney(Exchange exchange, ExchangeRate exchangeRate) {
         return new Exchanger(exchange.getMoney().getQuantity(), exchangeRate).getMoney();
     }
 
-    private MoneyDisplay readMoneyDisplay(Money money) {
-        return new MoneyDisplay(money);
-    }
-
-    private Connection createConnection(String dbPath) throws SQLException {
-        DriverManager.registerDriver(new OracleDriver());
-        return DriverManager.getConnection("jdbc:sqlite:" + dbPath);
+    private void displayMoney(MoneyDisplay moneyPanel, Money money) {
+        moneyPanel.display(money);
     }
 }

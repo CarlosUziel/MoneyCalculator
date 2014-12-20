@@ -5,11 +5,13 @@ import Model.CurrencySet;
 import Model.Exchange;
 import Model.Money;
 import View.UI.ExchangeDialog;
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
+import static java.awt.BorderLayout.CENTER;
+import static java.awt.BorderLayout.NORTH;
+import static java.awt.BorderLayout.SOUTH;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -23,15 +25,18 @@ class ExchangeDialogPanel extends JPanel implements ExchangeDialog {
 
     public ExchangeDialogPanel(CurrencySet currencySet) {
         this.currencySet = currencySet;
-        this.setLayout(new FlowLayout());
-        this.add(createQuantityField());
-        this.add(createCurrencyFromComboBox());
-        this.add(createCurrencyToComboBox());
+        this.currencyFrom = currencySet.getCurrencySet().get(0);
+        this.currencyTo = currencySet.getCurrencySet().get(0);
+        this.setLayout(new BorderLayout());
+        this.add(createCurrencyFromComboBox(), NORTH);
+        this.add(createQuantityField(), CENTER);
+        this.add(createCurrencyToComboBox(), SOUTH);
+        this.setVisible(true);
     }
 
     @Override
     public Exchange getExchange() {
-        return new Exchange(new Money(quantity, currencyTo), currencyTo);
+        return new Exchange(new Money(quantity, currencyFrom), currencyTo);
     }
 
     private JTextField createQuantityField() {
@@ -47,9 +52,10 @@ class ExchangeDialogPanel extends JPanel implements ExchangeDialog {
 
             @Override
             public void focusLost(FocusEvent e) {
-                if (Double.parseDouble(quantityField.getText()) == 0.0) {
+                if ("".equals(quantityField.getText())) {
                     quantityField.setText("Introduce the desired quantity you want to convert...");
                 }
+                quantity = Double.parseDouble(quantityField.getText());
             }
         });
         return quantityField;
@@ -59,13 +65,9 @@ class ExchangeDialogPanel extends JPanel implements ExchangeDialog {
         JComboBox<Currency> currencyFromComboBox;
         currencyFromComboBox = new JComboBox<>(currencySet.toArray());
 
-        currencyFromComboBox.addItemListener(new ItemListener() {
-
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() != ItemEvent.SELECTED) {
-                    currencyFrom = currencyFromComboBox.getItemAt(currencyFromComboBox.getSelectedIndex());
-                }
+        currencyFromComboBox.addItemListener((ItemEvent e) -> {
+            if (e.getStateChange() != ItemEvent.SELECTED) {
+                currencyFrom = currencyFromComboBox.getItemAt(currencyFromComboBox.getSelectedIndex());
             }
         });
         return currencyFromComboBox;
@@ -75,13 +77,9 @@ class ExchangeDialogPanel extends JPanel implements ExchangeDialog {
         JComboBox<Currency> currencyToComboBox;
         currencyToComboBox = new JComboBox<>(currencySet.toArray());
 
-        currencyToComboBox.addItemListener(new ItemListener() {
-
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() != ItemEvent.SELECTED) {
-                    currencyFrom = currencyToComboBox.getItemAt(currencyToComboBox.getSelectedIndex());
-                }
+        currencyToComboBox.addItemListener((ItemEvent e) -> {
+            if (e.getStateChange() != ItemEvent.SELECTED) {
+                currencyTo = currencyToComboBox.getItemAt(currencyToComboBox.getSelectedIndex());
             }
         });
         return currencyToComboBox;
