@@ -1,7 +1,6 @@
 package App;
 
 import Control.ExchangeCommand;
-import Model.Currency;
 import Model.CurrencySet;
 import Swing.ApplicationFrame;
 import View.Persistence.DatabaseCurrencySetLoader;
