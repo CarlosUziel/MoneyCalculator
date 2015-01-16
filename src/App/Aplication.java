@@ -18,9 +18,8 @@ public class Aplication {
 
         currencySet = new DatabaseCurrencySetLoader(connection).load();
         exchangeCommand = new ExchangeCommand(currencySet, connection);
-        new ApplicationFrame(currencySet,exchangeCommand);
-        
-        
+        new ApplicationFrame(currencySet, exchangeCommand);
+
     }
 
     private static Connection createOracleConnection(String dbPath) throws SQLException {

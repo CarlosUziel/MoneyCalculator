@@ -41,24 +41,19 @@ public class ApplicationFrame extends JFrame {
 
     private JButton createCalculateButton() {
         JButton button = new JButton("Calcular");
-        button.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    exchangeCommand.exec(exchangeDialog, moneyPanel);
-                } catch (SQLException ex) {
-                    Logger.getLogger(ApplicationFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        button.addActionListener((ActionEvent e) -> {
+            try {
+                exchangeCommand.exec(exchangeDialog, moneyPanel);
+            } catch (SQLException ex) {
+                Logger.getLogger(ApplicationFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         return button;
     }
 
     private JPanel createMoneyPanel() {
-        MoneyPanel moneyPanel = new MoneyPanel();
-        this.moneyPanel = moneyPanel;
-        return moneyPanel;
+        this.moneyPanel = new MoneyPanel();
+        return this.moneyPanel;
     }
 
     private JPanel createExchangeDialogPanel(CurrencySet currencySet) {

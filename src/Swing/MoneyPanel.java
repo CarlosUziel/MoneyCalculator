@@ -6,11 +6,11 @@ import java.awt.FlowLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-class MoneyPanel extends JPanel implements MoneyDisplay{
+class MoneyPanel extends JPanel implements MoneyDisplay {
 
     private Money money;
     private JTextField resultField;
-    
+
     public MoneyPanel() {
         this.setLayout(new FlowLayout());
         this.add(createResultField(20));
@@ -27,6 +27,5 @@ class MoneyPanel extends JPanel implements MoneyDisplay{
     public void display(Money money) {
         resultField.setText(money.getQuantity() + "  " + money.getCurrency().getCode() + "(" + money.getCurrency().getSymbol() + ")");
     }
-    
-    
+
 }

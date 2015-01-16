@@ -17,7 +17,7 @@ public class DatabaseExchangeRateLoader implements ExchangeRateLoader {
     @Override
     public ExchangeRate load(Currency currencyFrom, Currency currencyTo) {
         if (currencyFrom.getCode().equals(currencyTo.getCode())) {
-            return new ExchangeRate(currencyFrom,currencyTo,1.0d);
+            return new ExchangeRate(currencyFrom, currencyTo, 1.0d);
         }
         try {
             return processQuery(connection.createStatement().executeQuery(
