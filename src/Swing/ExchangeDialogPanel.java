@@ -16,7 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-class ExchangeDialogPanel extends JPanel implements ExchangeDialog {
+public class ExchangeDialogPanel extends JPanel implements ExchangeDialog {
 
     private final CurrencySet currencySet;
     private double quantity;

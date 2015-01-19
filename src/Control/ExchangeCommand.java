@@ -3,26 +3,29 @@ package Control;
 import Model.CurrencySet;
 import Model.Exchange;
 import Model.ExchangeRate;
+import Model.ExchangeRateSet;
 import Model.Money;
-import View.Persistence.DatabaseExchangeRateLoader;
 import View.Process.Exchanger;
 import View.UI.ExchangeDialog;
 import View.UI.MoneyDisplay;
-import java.sql.Connection;
-import java.sql.SQLException;
 
-public class ExchangeCommand {
+public class ExchangeCommand implements Command {
 
     private final CurrencySet currencySet;
-    private ExchangeDialog exchangeDialog;
-    private final Connection connection;
+    private final ExchangeRateSet exchangeRateSet;
+    private final ExchangeDialog exchangeDialog;
+    private final MoneyDisplay moneyPanel;
 
-    public ExchangeCommand(CurrencySet currencySet, Connection connection) {
+    // TODO Poner exchange rate set en vez de connection
+    public ExchangeCommand(CurrencySet currencySet, ExchangeRateSet exchangeRateSet, ExchangeDialog exchangeDialog, MoneyDisplay moneyPanel) {
         this.currencySet = currencySet;
-        this.connection = connection;
+        this.exchangeRateSet = exchangeRateSet;
+        this.exchangeDialog = exchangeDialog;
+        this.moneyPanel = moneyPanel;
     }
 
-    public void exec(ExchangeDialog exchangeDialog, MoneyDisplay moneyPanel) throws SQLException {
+    @Override
+    public void execute() {
         Exchange exchange = readExchange(exchangeDialog);
         ExchangeRate exchangeRate = readExchangeRate(exchange);
         Money money = readMoney(exchange, exchangeRate);
@@ -33,8 +36,8 @@ public class ExchangeCommand {
         return exchangeDialog.getExchange();
     }
 
-    private ExchangeRate readExchangeRate(Exchange exchange) throws SQLException {
-        return new DatabaseExchangeRateLoader(connection).load(exchange.getMoney().getCurrency(), exchange.getCurrencyTo());
+    private ExchangeRate readExchangeRate(Exchange exchange){
+        return exchangeRateSet.getExchangeRate(exchange);
     }
 
     private Money readMoney(Exchange exchange, ExchangeRate exchangeRate) {
@@ -43,5 +46,10 @@ public class ExchangeCommand {
 
     private void displayMoney(MoneyDisplay moneyPanel, Money money) {
         moneyPanel.display(money);
+    }
+
+    @Override
+    public boolean available() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

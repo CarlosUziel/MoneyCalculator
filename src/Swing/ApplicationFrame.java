@@ -1,17 +1,15 @@
 package Swing;
 
-import Control.ExchangeCommand;
+import Control.Command;
 import Model.CurrencySet;
 import View.UI.ExchangeDialog;
+import View.UI.MoneyDisplay;
 import java.awt.BorderLayout;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.NORTH;
 import static java.awt.BorderLayout.SOUTH;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,14 +17,13 @@ import javax.swing.JPanel;
 public class ApplicationFrame extends JFrame {
 
     private final CurrencySet currencySet;
-    private final ExchangeCommand exchangeCommand;
+    private Command command;
     private ExchangeDialog exchangeDialog;
     private MoneyPanel moneyPanel;
     private ActionListener actionListener;
 
-    public ApplicationFrame(CurrencySet currencySet, ExchangeCommand exchangeCommand) {
+    public ApplicationFrame(CurrencySet currencySet) {
         this.currencySet = currencySet;
-        this.exchangeCommand = exchangeCommand;
         this.setTitle("Money Calculator");
         this.setLayout(new BorderLayout());
         this.setSize(350, 250);
@@ -42,11 +39,7 @@ public class ApplicationFrame extends JFrame {
     private JButton createCalculateButton() {
         JButton button = new JButton("Calcular");
         button.addActionListener((ActionEvent e) -> {
-            try {
-                exchangeCommand.exec(exchangeDialog, moneyPanel);
-            } catch (SQLException ex) {
-                Logger.getLogger(ApplicationFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            command.execute();
         });
         return button;
     }
@@ -64,6 +57,14 @@ public class ApplicationFrame extends JFrame {
 
     public ExchangeDialog getExchangeDialog() {
         return exchangeDialog;
+    }
+
+    public void registerCommand(Command command) {
+        this.command = command;
+    }
+
+    public MoneyDisplay getMoneyPanel() {
+        return moneyPanel;
     }
 
 }
